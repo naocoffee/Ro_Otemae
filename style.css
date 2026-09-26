@@ -22,11 +22,9 @@
   --heri: #27312a;          /* 畳縁 */
   --gold: #a4873d;
 
-  /* 端末内蔵の和文ゴシック（Web フォントは読み込まない） */
-  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
-  --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Courier New", monospace;
-  --serif: var(--font);   /* 見出し用（太字で表現） */
-  --sans: var(--font);
+  /* ヒラギノ角ゴ（Mac / iPhone / iPad）。ヒラギノのない Windows・Android では
+     字形の近い Noto Sans JP（index.html で読み込み）で表示する */
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴシック", "Noto Sans JP", sans-serif;
 }
 
 *,
@@ -37,7 +35,7 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  font-family: var(--sans);
+  font-family: var(--font);
   font-size: 16px;
   line-height: 1.75;
   color: var(--ink);
@@ -50,7 +48,12 @@ body {
   min-height: 100vh;
 }
 
-button { font: inherit; color: inherit; }
+button,
+input,
+select,
+textarea { font: inherit; font-family: var(--font); color: inherit; }
+
+svg text { font-family: var(--font); }
 
 :focus-visible {
   outline: 3px solid var(--gold);
@@ -76,7 +79,7 @@ button { font: inherit; color: inherit; }
 
 .head-title {
   margin: 0;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: clamp(1.9rem, 6vw, 2.9rem);
   letter-spacing: .08em;
@@ -140,14 +143,15 @@ button { font: inherit; color: inherit; }
 }
 
 .tab-name {
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: .95rem;
   white-space: nowrap;
 }
 
 .tab-best {
-  font-family: var(--mono);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
   font-size: .66rem;
   color: #c9b778;
 }
@@ -187,7 +191,7 @@ button { font: inherit; color: inherit; }
 
 .intro-title {
   margin: .1em 0 .3em;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: clamp(1.35rem, 3.6vw, 1.85rem);
   line-height: 1.35;
@@ -278,7 +282,7 @@ button { font: inherit; color: inherit; }
 
 /* SVG 内部 */
 .lbl {
-  font-family: var(--sans);
+  font-family: var(--font);
   font-size: 7.4px;
   font-weight: 700;
   fill: #2b2923;
@@ -289,7 +293,7 @@ button { font: inherit; color: inherit; }
 }
 
 .lbl-dir {
-  font-family: var(--sans);
+  font-family: var(--font);
   font-size: 7px;
   font-weight: 500;
   fill: #4a4535;
@@ -342,7 +346,8 @@ button { font: inherit; color: inherit; }
 }
 
 .progress-row strong {
-  font-family: var(--mono);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
   font-size: 1.05rem;
   color: var(--ink);
 }
@@ -385,7 +390,7 @@ button { font: inherit; color: inherit; }
 
 .question {
   margin: 0 0 12px;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: 1.12rem;
   line-height: 1.55;
@@ -423,7 +428,7 @@ button { font: inherit; color: inherit; }
 }
 
 .choice-kana {
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   color: var(--matcha-deep);
 }
@@ -459,7 +464,7 @@ button { font: inherit; color: inherit; }
 
 .feedback-head {
   margin: 0 0 4px;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: 1.05rem;
 }
@@ -509,7 +514,8 @@ button { font: inherit; color: inherit; }
 
 .result-score {
   margin: 4px 0 2px;
-  font-family: var(--mono);
+  font-family: var(--font);
+  font-variant-numeric: tabular-nums;
   font-weight: 800;
   font-size: clamp(2.6rem, 9vw, 3.6rem);
   line-height: 1.1;
@@ -526,7 +532,7 @@ button { font: inherit; color: inherit; }
 .result-msg {
   margin: 8px auto 4px;
   max-width: 26em;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-size: 1rem;
 }
 
@@ -543,7 +549,7 @@ button { font: inherit; color: inherit; }
 
 .miss-list h3 {
   margin: 0 0 6px;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-size: .98rem;
 }
 
@@ -553,7 +559,7 @@ button { font: inherit; color: inherit; }
 /* ---------- steps（手順一覧） ---------- */
 .steps-head {
   margin: 0 0 4px;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-size: 1.08rem;
 }
 
@@ -583,7 +589,7 @@ button { font: inherit; color: inherit; }
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-weight: 800;
   font-size: .85rem;
   color: var(--paper);
@@ -594,7 +600,7 @@ button { font: inherit; color: inherit; }
 .steps li.is-current::before { background: var(--matcha); }
 
 .steps .s-step { font-size: .74rem; color: var(--wood); }
-.steps .s-ans { margin: 1px 0 2px; font-family: var(--serif); font-weight: 700; line-height: 1.6; }
+.steps .s-ans { margin: 1px 0 2px; font-family: var(--font); font-weight: 700; line-height: 1.6; }
 .steps .s-scene { margin: 0; font-size: .82rem; color: var(--ink-soft); }
 
 .steps .s-view {
