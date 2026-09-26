@@ -22,8 +22,11 @@
   --heri: #27312a;          /* 畳縁 */
   --gold: #a4873d;
 
-  --serif: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
-  --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  /* 端末内蔵の和文ゴシック（Web フォントは読み込まない） */
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Courier New", monospace;
+  --serif: var(--font);   /* 見出し用（太字で表現） */
+  --sans: var(--font);
 }
 
 *,
@@ -76,7 +79,7 @@ button { font: inherit; color: inherit; }
   font-family: var(--serif);
   font-weight: 800;
   font-size: clamp(1.9rem, 6vw, 2.9rem);
-  letter-spacing: .14em;
+  letter-spacing: .08em;
   line-height: 1.25;
 }
 
@@ -138,12 +141,13 @@ button { font: inherit; color: inherit; }
 
 .tab-name {
   font-family: var(--serif);
-  font-weight: 700;
+  font-weight: 800;
   font-size: .95rem;
   white-space: nowrap;
 }
 
 .tab-best {
+  font-family: var(--mono);
   font-size: .66rem;
   color: #c9b778;
 }
@@ -293,9 +297,9 @@ button { font: inherit; color: inherit; }
 }
 
 .lbl-mat {
-  font-family: var(--serif);
+  font-family: var(--font);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   fill: #6d6437;
   opacity: .35;
   letter-spacing: 4px;
@@ -338,7 +342,7 @@ button { font: inherit; color: inherit; }
 }
 
 .progress-row strong {
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-size: 1.05rem;
   color: var(--ink);
 }
@@ -374,9 +378,9 @@ button { font: inherit; color: inherit; }
   padding: 10px 14px;
   border-left: 3px solid var(--wood-light);
   background: #ebe6d6;
-  font-family: var(--serif);
+  font-family: var(--font);
   font-size: .98rem;
-  line-height: 1.85;
+  line-height: 1.8;
 }
 
 .question {
@@ -505,7 +509,7 @@ button { font: inherit; color: inherit; }
 
 .result-score {
   margin: 4px 0 2px;
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-weight: 800;
   font-size: clamp(2.6rem, 9vw, 3.6rem);
   line-height: 1.1;
@@ -513,6 +517,7 @@ button { font: inherit; color: inherit; }
 }
 
 .result-score small {
+  font-family: var(--font);
   font-size: .4em;
   color: var(--ink-soft);
   font-weight: 700;
