@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <header class="site-head">
@@ -30,9 +30,16 @@
         <h2 class="intro-title" id="temaeTitle"></h2>
         <p class="intro-lead" id="temaeLead"></p>
       </div>
-      <div class="mode" role="group" aria-label="表示の切り替え">
-        <button type="button" class="mode-btn is-active" data-mode="quiz" aria-pressed="true">クイズで答える</button>
-        <button type="button" class="mode-btn" data-mode="steps" aria-pressed="false">手順を通して見る</button>
+      <div class="controls">
+        <div class="mode" role="group" aria-label="表示の切り替え">
+          <button type="button" class="mode-btn is-active" data-mode="quiz" aria-pressed="true">クイズ</button>
+          <button type="button" class="mode-btn" data-mode="steps" aria-pressed="false">手順を確認</button>
+        </div>
+        <div class="mode guide" role="group" aria-label="配置図のガイド表示">
+          <span class="guide-label">図のガイド</span>
+          <button type="button" class="mode-btn guide-btn is-active" data-guide="on" aria-pressed="true">あり</button>
+          <button type="button" class="mode-btn guide-btn" data-guide="off" aria-pressed="false">なし</button>
+        </div>
       </div>
     </section>
 
@@ -56,6 +63,6 @@
     <p>炉点前 稽古帖 ─ 稽古の復習用</p>
   </footer>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
