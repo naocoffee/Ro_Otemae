@@ -23,30 +23,30 @@
 
   // 四畳半切（本勝手）：炉は点前畳の向こう、半畳の角。水指は畳中央・炉側の縁から16目
   const YOJO_POS = {
-    host: [152, 191, 'b', -15, '亭主（点前座）'],   // 点前座＝居前（炉縁の内隅狙い）
+    host: [138, 191, 'b', 12, '亭主（点前座）'],    // 点前座＝居前：釜に向かって斜め（炉縁の内隅狙い）
     hostMizu: [125.5, 190, 'b', 0, '亭主（勝手付・水指正面）'],
-    hostKyaku: [171, 139, 'b', 90, '亭主（客付）'],
-    door: [13, 160, 'r', 90],           // 茶道口
+    hostKyaku: [168, 147, 'b', 0, '亭主（客付）'],   // 右端の炉縁が膝の中心、16目あけて客の方へ
+    door: [13, 196, 'r', 90, '亭主（茶道口）'],
     mizu: [125.5, 136, 'tl'],           // 畳中央、向こうの縁から16目
     frontL: [114, 158, 'l'],            // 置き合わせ（茶碗）
     frontR: [137, 158, 'r'],            // 置き合わせ（棗・茶入）水指の右斜め前
     frontC: [125.5, 158, 'b'],
-    knee: [150, 160, 'l'],              // 膝正面の少し奥
-    mid: [151, 171, 'l'],               // 膝と茶碗の間
+    knee: [141, 160, 'l'],              // 膝正面の少し奥
+    mid: [140, 171, 'l'],               // 膝と茶碗の間
     nClean: [134, 123, 't'],            // 水指と炉を結ぶ線上
     chasenR: [145, 123, 'b'],           // 棗の右
     futaoki: [175, 117, 'r'],           // 炉の右下、3目ずつあけて
-    kensui: [124, 183, 'l'],            // 炉縁半がかり
-    kensuiIn: [124, 183, 'n'],
-    dasu: [180, 172, 'r'],
-    haiken1: [197, 129, 'r'],
-    haiken2: [197, 143, 'r'],
-    haiken3: [197, 157, 'r'],
+    kensui: [112, 184, 'l'],            // 左膝の横、炉縁半がかり
+    kensuiIn: [112, 184, 'n'],
+    dasu: [168, 176, 'r'],
+    haiken1: [168, 124, 'l'],           // 客付の前に拝見物
+    haiken2: [182, 124, 't'],
+    haiken3: [196, 124, 'r'],
     shifukuPos: [108, 139, 'l'],        // 仕覆：水指の左
     mzChakin: [125.5, 140.5, 'n'],      // 水指の蓋の上（茶筅荘）
     mzChasen: [125.5, 139.5, 'n'],
     mzShaku: [132, 135, 'n', 90],
-    tomoOut: [48, 175, 'r'],
+    tomoOut: [94, 170, 'l'],            // 勝手付に仮置き
     shelfN: [141, 127, 'r'],            // 更好棚の中段
     shelfTop: [110, 127, 'l'],          // 更好棚の上段
     tanaFuta: [105, 143, 'b'],
@@ -62,16 +62,16 @@
   };
 
   const YOJO_HISHAKU = {
-    onKama: [146, 86, 150, 126],
-    onFutaoki: [175, 117, 178, 157],
-    kensuiSet: [122, 181, 146, 176],
+    onKama: [146, 86, 142, 126],
+    onFutaoki: [175, 117, 168, 156],
+    kensuiSet: [110, 182, 132, 175],
     tanaKazari: [106, 127, 141, 146],
     nagaita: [100, 121, 100, 108]
   };
 
   const DAIME_BASE = {
     host: [101.6, 192, 'b', 0, '亭主（点前座）'],
-    door: [13, 160, 'r', 90],
+    door: [13, 196, 'r', 90, '亭主（茶道口）'],
     knee: [101.6, 161, 'l'],
     mid: [101.6, 173, 'l'],
     dasu: [134, 189, 'r'],
@@ -1165,35 +1165,33 @@
   }
 
   function floorLayer(room) {
-    let s = '<rect x="0" y="0" width="300" height="240" fill="#b3a870"/>';
-    if (room.mat === 'yojo') {
-      // 四畳半：点前畳（京間 191×95.5）、向こうに半畳、右に客畳
-      s += tatami(30, 14.5, 95.5, 95.5, 'url(#tmV)', 'lr');          // 左上の畳（一部）
-      s += tatami(125.5, 14.5, 95.5, 95.5, 'url(#tmHo)', 'tb');      // 半畳（炉を切る）
-      s += tatami(221, 14.5, 95.5, 191, 'url(#tmV)', 'lr');          // 客畳
-      s += tatami(30, 205.5, 191, 95.5, 'url(#tmHo)', 'tb');         // 手前の畳（一部）
-      s += tatami(30, MAT_Y, 191, MAT_D, 'url(#tmH)', 'tb');         // 点前畳
-      s += '<text class="lbl-mat" x="75" y="' + (MAT_Y + 50) + '" text-anchor="middle">点前畳</text>';
-      s += '<text class="lbl-dir" x="262" y="96" text-anchor="middle">客畳</text>';
-      s += '<text class="lbl-dir" x="262" y="106" text-anchor="middle">（客付 →）</text>';
-      s += '<text class="lbl-dir" x="78" y="60" text-anchor="middle">向こう ↑</text>';
-    } else {
-      // 小間：台目畳（143.25×95.5）の点前畳、向こうに客畳、右に板
-      const w = 191 * 0.75;
-      s += tatami(30, 14.5, 191, 95.5, 'url(#tmHo)', 'tb');          // 客畳
-      s += '<rect x="' + f(30 + w) + '" y="' + MAT_Y + '" width="' + f(191 - w) + '" height="' + MAT_D + '" fill="url(#boardG)" stroke="#6b5132" stroke-width=".4"/>';
-      s += tatami(30, MAT_Y, w, MAT_D, 'url(#tmH)', 'tb');           // 台目畳
-      s += '<text class="lbl-dir" x="' + f(30 + w - 3) + '" y="' + (MAT_Y + MAT_D - 5) + '" text-anchor="end">点前畳（台目）</text>';
-      s += '<text class="lbl-dir" x="125" y="58" text-anchor="middle">客畳（客座）</text>';
+    // 茶室全体ではなく、点前畳と炉の位置関係だけを描く
+    let s = '<rect x="0" y="0" width="300" height="260" fill="#ddd5bb"/>';
+    const yojo = room.mat === 'yojo';
+    const matW = yojo ? 191 : 191 * 0.75;
+    if (yojo) {
+      // 四畳半切：炉は点前畳の外、向こうの半畳に切る
+      s += '<g opacity=".6">' + tatami(125.5, 14.5, 95.5, 95.5, 'url(#tmHo)', '') + '</g>';
+      s += '<rect x="125.5" y="14.5" width="95.5" height="95.5" fill="none" stroke="#6f6640" stroke-width=".5" stroke-dasharray="3 2"/>';
+      s += '<text class="lbl-dir" x="196" y="72" text-anchor="middle">半畳</text>';
+      s += '<text class="lbl-dir" x="196" y="81" text-anchor="middle">（炉を切る）</text>';
     }
-    // 勝手付の壁と茶道口
-    s += '<rect x="24" y="10" width="6" height="' + (MAT_Y + 5 - 10) + '" fill="#6b5a44"/>';
-    s += '<rect x="24" y="' + (MAT_Y + 90) + '" width="6" height="40" fill="#6b5a44"/>';
-    s += '<text class="lbl-dir" x="12" y="' + (MAT_Y + 12) + '" text-anchor="middle">茶道口</text>';
-    s += '<text class="lbl-dir" x="12" y="60" text-anchor="middle">勝手付</text>';
-    s += '<text class="lbl-dir" x="' + (room.mat === 'yojo' ? 75 : 55) + '" y="' + (MAT_Y + MAT_D + 12) + '" text-anchor="middle">手前 ↓</text>';
+    s += tatami(30, MAT_Y, matW, MAT_D, 'url(#tmH)', 'tb');
+    if (yojo) {
+      s += '<text class="lbl-mat" x="62" y="' + (MAT_Y + 56) + '" text-anchor="middle">点前畳</text>';
+    } else {
+      s += '<text class="lbl-dir" x="' + f(30 + matW - 3) + '" y="' + (MAT_Y + MAT_D - 5) + '" text-anchor="end">点前畳（台目）</text>';
+    }
+    // 亭主から見た方向
+    const right = 30 + matW;
+    s += '<text class="lbl-dir" x="62" y="' + (MAT_Y - 8) + '" text-anchor="middle">向こう ↑</text>';
+    s += '<text class="lbl-dir" x="62" y="' + (MAT_Y + MAT_D + 12) + '" text-anchor="middle">手前 ↓</text>';
+    s += '<text class="lbl-dir" x="15" y="' + (MAT_Y + 14) + '" text-anchor="middle">勝手付</text>';
+    s += '<text class="lbl-dir" x="15" y="' + (MAT_Y + 23) + '" text-anchor="middle">←</text>';
+    s += '<text class="lbl-dir" x="' + f(right + 15) + '" y="' + (MAT_Y + 14) + '" text-anchor="middle">客付</text>';
+    s += '<text class="lbl-dir" x="' + f(right + 15) + '" y="' + (MAT_Y + 23) + '" text-anchor="middle">→</text>';
     // 縮尺
-    s += '<g transform="translate(236,222)"><line x1="0" y1="0" x2="30" y2="0" stroke="#3b3528" stroke-width=".8"/>' +
+    s += '<g transform="translate(' + f(right - 32) + ',' + (MAT_Y + MAT_D + 12) + ')"><line x1="0" y1="0" x2="30" y2="0" stroke="#3b3528" stroke-width=".8"/>' +
       '<line x1="0" y1="-2" x2="0" y2="2" stroke="#3b3528" stroke-width=".8"/><line x1="30" y1="-2" x2="30" y2="2" stroke="#3b3528" stroke-width=".8"/>' +
       '<text class="lbl-dir" x="15" y="9" text-anchor="middle">30cm</text></g>';
     return s;
@@ -1461,7 +1459,8 @@
       .map(function (i) { return i.label || NAMES[i.type]; })
       .filter(Boolean).join('、');
 
-    return '<svg viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(aria) + '">' +
+    const vb = room.mat === 'yojo' ? '0 44 252 196' : '0 92 206 148';
+    return '<svg viewBox="' + vb + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + esc(aria) + '">' +
       SVG_DEFS + floorLayer(room) + roLayer(room, kamaOpen) + shapes + labels + '</svg>';
   }
 
